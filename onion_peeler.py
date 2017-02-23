@@ -35,12 +35,23 @@ def Help():
 		
 def lookup():
 
-	master.config(cursor="wait")
-	master.update()
-
 	input_file = ttk.e1.get()
 	output_file = ttk.e2.get()
 	count = 0
+	
+	
+	try:
+		outfile = open(output_file,"w")
+		
+	except:
+		tkMessageBox.showinfo("Error", "Could not open output file. Verify the file is not currently open.")
+		return
+	outfile.write("Provided IP,Nickname,Tor Address,Running,Fingerprint\n")
+	
+	master.config(cursor="wait")
+	master.update()
+
+
 
 	try:
 		manager = Manager(OnionSimpleCache())
@@ -49,13 +60,6 @@ def lookup():
 		tkMessageBox.showinfo("Issues Accessing Tor Database", "Check to make sure you have Internet access then try again,or site may be down.")
 		return
 
-	try:
-		outfile = open(output_file,"w")
-		
-	except:
-		tkMessageBox.showinfo("Error", "Could not open output file. Verify the file is not currently open.")
-		return
-	outfile.write("Provided IP,Nickname,Tor Address,Running,Fingerprint\n")
 	
 	with open(input_file,'r') as f:
 		IPs = f.read().splitlines()
