@@ -15,7 +15,7 @@ from tkFileDialog   import askopenfilename,asksaveasfilename
 import tkMessageBox
 import ttk
 import os
-import winsound
+
 
 import csv
 import sys
@@ -84,7 +84,6 @@ def lookup():
 					break
 	
 	master.config(cursor="")          
-	winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS)
 	tkMessageBox.showinfo("Completed", "Found " + str(count) + " Tor matches ")
 
 
