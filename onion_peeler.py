@@ -9,15 +9,13 @@ try:
 	from onion_py.caching import OnionSimpleCache
 except:
 	print "OnionPy must be installed. Try pip install OnionPY"
+	exit()
 
 from Tkinter import *
 from tkFileDialog   import askopenfilename,asksaveasfilename
 import tkMessageBox
 import ttk
 import os
-
-
-import csv
 import sys
 
 def openfile():
@@ -48,7 +46,7 @@ def lookup():
 		return
 	outfile.write("Provided IP,Nickname,Tor Address,Running,Fingerprint\n")
 	
-	master.config(cursor="wait")
+	master.config(cursor="watch")
 	master.update()
 
 
@@ -63,6 +61,8 @@ def lookup():
 	
 	with open(input_file,'r') as f:
 		IPs = f.read().splitlines()
+	#strip out any blank lines	
+	IPs = [line for line in IPs if line.strip()]
 	for relay in s.relays:
 		for address in relay.addresses:
 			#print relay.nickname + "," + address
@@ -99,8 +99,9 @@ if __name__ == '__main__':
 	
 	icon = os.path.join(resources_path,"onion.ico")
 
-	if os.path.exists(icon):
-		master.iconbitmap(icon)
+	if 'nt' == os.name:
+		if os.path.exists(icon):
+			master.iconbitmap(icon)
 		
 	menu = Menu(master)
 	master.config(menu=menu)
