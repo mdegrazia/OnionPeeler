@@ -25,7 +25,7 @@ def openfile():
 	ttk.e1.insert(10,file1)
         
 def savereport():
-	file2= asksaveasfilename(initialfile="report.txt",defaultextension=".txt")
+	file2= asksaveasfilename(initialfile="report.csv",defaultextension=".csv")
 	ttk.e2.insert(10,file2)
 	
 def About():
@@ -49,8 +49,13 @@ def lookup():
 		tkMessageBox.showinfo("Issues Accessing Tor Database", "Check to make sure you have Internet access then try again,or site may be down.")
 		return
 
-	outfile = open(output_file,"a")
-	outfile.write("My IP,Nickname,Tor Address,Running,Fingerprint\n")
+	try:
+		outfile = open(output_file,"w")
+		
+	except:
+		tkMessageBox.showinfo("Error", "Could not open output file. Verify the file is not currently open.")
+		return
+	outfile.write("Provided IP,Nickname,Tor Address,Running,Fingerprint\n")
 	
 	with open(input_file,'r') as f:
 		IPs = f.read().splitlines()
@@ -69,7 +74,7 @@ def lookup():
 					else:
 						fingerprint = "BLANK"
 					
-					outfile.write(IP + "," + nickname + "," + fingerprint + "," + address + "," + str(relay.running) + "\n")
+					outfile.write(IP + "," + nickname + "," + address + "," + str(relay.running) + "," + fingerprint + "\n")
 					count = count + 1
 					#exit this loop now that we found a hit
 					break
