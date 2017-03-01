@@ -55,7 +55,9 @@ def lookup():
 		manager = Manager(OnionSimpleCache())
 		s = manager.query('summary')
 	except:
-		tkMessageBox.showinfo("Issues Accessing Tor Database", "Check to make sure you have Internet access then try again,or site may be down.")
+		this_error = sys.exc_info()[0]
+		tkMessageBox.showinfo("Error contacting OnionOO",str(this_error))
+		master.config(cursor="")
 		return
 
 	
