@@ -49,7 +49,8 @@ def lookup():
 	master.config(cursor="watch")
 	master.update()
 
-
+	#work around until onion_py supports OnionOO v. 4
+	Manager.OOO_VERSION_MAJOR = 4
 
 	try:
 		manager = Manager(OnionSimpleCache())
